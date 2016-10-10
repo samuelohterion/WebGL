@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+	<html lang="de">
+		<head>
+			<meta charset="utf-8">
+			<title>
+				Moveexperiment 2
+			</title>
+			<style>
+				#block {
+					position: absolute;
+					left: 700px;
+					top: 500px;
+				}
+				#ship {
+					width: 50px;
+					height: 50px;
+				}
+			</style> 
+		</head>
+		<body>
+			<input id = "tag" type = "text" >
+			</input>
+			<div id = "block">
+				<img id="ship" src = ship.png>
+			</div>
+			<script>
+				document.getElementById( "tag" ).onkeypress = function shipmove( e ) {
+					e = e || event;
+					switch( event.keyCode ) {
+
+						default: {
+							block.style.left = parseInt( block.style.left ) - block.offsetWidth + 'px';
+						    return false;
+						}
+					}
+				}
+			</script>
+		</body>
+	</html>
+  
