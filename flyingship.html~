@@ -1,52 +1,51 @@
 <!DOCTYPE html>
-	<html lang="de" onkeydown="shipmove( event	 );">
-		<head>
-			<meta charset="utf-8">
-			<title>
-				Moveexperiment 2
-			</title>
-			<style>
-				#block {
-					position: absolute;
-					left: 400px;
-					top: 400px;
-				}
-				#ship {
-					position: relative;
-					width: 250px;
-					height: 250px;
-				}
-			</style> 
-		</head>
-		<body>
-			<input id = "tag" type = "text" >
-			</input>
-				<div id = "block">
-					<img id="ship" src="pix/robert.jpg"><h2>robert at<br /> low frequencies</h2></img>
-				</div>
-			<script>
-				block.style.top = '400px';
-				block.style.left = '400px';
+<html lang="de" onkeydown="shipmove( event	 );">
+	<head>
+		<meta charset="utf-8">
+		<title>
+			Moveexperiment 2
+		</title>
+		<style>
+			#block {
+				position: absolute;
+				left: 400px;
+				top: 400px;
+			}
+			#ship {
+				position: relative;
+				width: 250px;
+				height: 250px;
+			}
+		</style> 
+	</head>
+	<body>
+		<div id = "block">
+			<img id="ship" src="pix/robert.jpg"><h2>robert at<br /> low frequencies</h2></img>
+		</div>
+		<script>
 
-				function shipmove( event ) {
+			block.style.top = '400px';
+			block.style.left = '400px';
+
+			function shipmove( event ) {
 
 //					alert( event.keyCode );
 
-					var dx = 0;
-					var dy = 0;
-				
-					switch ( event.keyCode ) {
+				var dx = 0;
+				var dy = 0;
+			
+				switch ( event.keyCode ) {
 
-						case 37 : dx -= 5; break;
-						case 39 : dx += 5; break;
-						case 38 : dy -= 5; break;
-						case 40 : dy += 5; break;
-					}
-
-					block.style.left = parseInt( block.style.left ) + dx + 'px';
-					block.style.top  = parseInt( block.style.top ) + dy + 'px';
+					case 37 : dx -= 5; break;
+					case 39 : dx += 5; break;
+					case 38 : dy -= 5; break;
+					case 40 : dy += 5; break;
 				}
-			</script>
-		</body>
-	</html>
+
+				block.style.left = parseInt( block.style.left ) + dx + 'px';
+				block.style.top  = parseInt( block.style.top ) + dy + 'px';
+			}
+		</script>
+	</body>
+</html>
   
