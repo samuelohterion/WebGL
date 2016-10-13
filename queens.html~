@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>		
+		<script type="text/javascript">
+			var max_attempts = 10;
+			var board = [ 
+				[ 0, 0, 0, 0, 0, 0, 0, 0, ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0, ],
+				[ 0, 0, 0, 0, 0, 0, 0, 0 ]
+			];
+			var currCol = 0;
+			function check( r, c ) {
+				for ( var i = 0; i < 8; ++i )
+					if(	( board[ i ][ c ] ) || 
+							( board[ r ][ i ] ) ||
+							( r + i < 8  && c + i < 8 && board[ r + i ][ c + i ] ) ||
+							( 0 <= r - i && c + i < 8 && board[ r - i ][ c + i ] ) ||
+							( 0 <= r - i && 0 <= c - i && board[ r - i ][ c - i ] ) ||
+							( r + i < 8  && 0 <= c - i && board[ r + i ][ c - i ] ) )
+							return false;						
+				return true;
+			}
+			function drop( queen, r, cc ) {
+				alert( board );
+				if( 7 < queen ) 
+					return true;
+				if ( 7 < r )
+					return false;
+				for ( var c = 0; c < 8; ++c ) {
+					if( check( r, c ) ) {
+						board[ r ][ c ] = ++queen;
+						var success = drop( queen, ++r );
+						--queen;
+						if( success )
+							return true;
+						board[ --r ][ c ] = 0;
+					}
+				}
+				return false;
+			}
+			function work( ) {
+				if( 7 < currCol ) {
+					document.getElementById( "obj" ).innerHTML = 'no more solutions';
+					return;
+				}
+				for ( var row = 0; row < 8; ++row )
+					for ( var col = 0; col < 8; ++col )
+						board[ row ][ col ] = 0;
+				var str = '';
+				if ( drop( 0, currCol ) ) {
+				for ( var row = 0; row < 8; ++row ) {
+					for ( var col = 0; col < 8; ++col ) {
+							str += board[ row ][ col ] + " ";	
+						}
+						str += "<br />";						
+					}
+				}				
+				document.getElementById( "obj" ).innerHTML = str;
+				++currCol;
+			}		
+		</script>	
+	</head>
+	<body onload="work()">
+		<button id="btn" onclick="work( );">
+			next solution
+		</button>
+		<p id="obj">			
+		</p>
+		<table>
+	</body>
+</html>

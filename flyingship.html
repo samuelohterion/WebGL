@@ -19,13 +19,26 @@
 		</style> 
 	</head>
 	<body>
+		<p id="time">
+			
+		</p>
+		
 		<div id = "block">
 			<img id="ship" src="pix/robert.jpg"><h2>robert at<br /> low frequencies</h2></img>
 		</div>
+
 		<script>
 
-			block.style.top = '400px';
-			block.style.left = '400px';
+			block.style.top = '100px';
+			block.style.left = '100px';
+			
+			var t_start, t_end;
+
+			t_start = new Date().getTime();
+
+			// Code, dessen Ausführungszeit wir messen wollen
+			t_end = new Date().getTime();
+			alert( t_end - t_start );
 
 			function shipmove( event ) {
 

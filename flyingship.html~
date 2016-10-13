@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de" onkeydown="shipmove( event	 );">
+<html lang="de" onkeydown="shipmove( event );">
 	<head>
 		<meta charset="utf-8">
 		<title>
@@ -24,8 +24,8 @@
 		</div>
 		<script>
 
-			block.style.top = '400px';
-			block.style.left = '400px';
+			block.style.top = '100px';
+			block.style.left = '100px';
 
 			function shipmove( event ) {
 
