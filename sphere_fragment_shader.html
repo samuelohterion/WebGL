@@ -8,7 +8,7 @@
 
 	<body>
 
-		<canvas width = "570" height = "570" id = "myCanvas">
+		<canvas width = "800" height = "800" id = "myCanvas">
 		</canvas>
 
 		<script>
@@ -59,18 +59,18 @@
 
 			var vertices = [
 
-				-.95, -.95, +.0,
-				+.95, -.95, +.0,
-				+.95, +.95, +.0,
-				-.95, +.95, +.0 
+				-1.0, -1.0, +0.0,
+				+1.0, -1.0, +0.0,
+				+1.0, +1.0, +0.0,
+				-1.0, +1.0, +0.0 
 			];
 
 			var colors = [
 
-				1.0, 0.0, 0.0,
-				0.0, 1.0, 0.0,
-				0.0, 0.0, 1.0,
-				0.3, 0.3, 0.3
+				1.0, 1.0, 1.0,
+				1.0, 1.0, 1.0,
+				1.0, 1.0, 1.0,
+				1.0, 1.0, 1.0
 			];
 
 			indices = [
@@ -78,7 +78,6 @@
 				0, 1, 2,
 				2, 3, 0
 			];
-
 
 			
 			/*========== Defining and storing the geometry =========*/
@@ -92,25 +91,35 @@
 						
 
 			/*====================== Shaders =======================*/
+			
 
-			var vertShader = createShader( " \
-				attribute vec3 coordinates; \
-				attribute vec3 color; \
-				varying   vec3 vColor; \
-				void main( void ) { \
-					gl_Position = vec4( coordinates, 1. ); \
-					vColor = color; \
-				}",
-				 gl.VERTEX_SHADER );
+			var vertShader = createShader( '\
+				attribute vec3 coordinates;\
+				attribute vec3 color;\
+				varying   vec3 vColor;\
+				varying   vec3 vPosition;\
+				void main( void ) {\
+				\
+					gl_Position = vec4( coordinates, 1. );\
+					vColor = color;\
+					vPosition = coordinates; \
+				}',
+				gl.VERTEX_SHADER );
 
 			
-			var fragShader = createShader( 
-				"precision mediump float;" +
-				"varying vec3 vColor;" +
-				"void main( void ) {" +
-				"	gl_FragColor = vec4( vColor, 1. );" +
-				"}",
-				 gl.FRAGMENT_SHADER );
+			var fragShader = createShader( ' \
+				precision mediump float; \
+				varying vec3 vColor; \
+				varying vec3 vPosition; \
+				void main( void ) { \
+					if( length( vPosition, vPosition ) < 1. ) { \
+						gl_FragColor = vec4( sqrt( 1. - dot( vPosition, vPosition ) ), 1. ); \
+					} \
+					else { \
+						gl_FragColor = vec4( vColor, 1. ); \
+					} \
+				}',
+				gl.FRAGMENT_SHADER );
 
 			// Create a shader program object to
 			// store the combined shader program
@@ -118,6 +127,7 @@
 
 
 			/* ======= Associating shaders to buffer objects =======*/
+
 
 			// Bind vertex buffer object
 			gl.bindBuffer( gl.ARRAY_BUFFER, vertexBuffer );
@@ -144,10 +154,12 @@
 			
 			gl.enableVertexAttribArray( color );
 
+
 			/*============= Drawing the Quad ================*/
 
+
 			// Clear the canvas
-			gl.clearColor( .5, .5, .5, .9 );
+			gl.clearColor( .95, .95, .95, 1. );
 
 			// Enable the depth test
 			gl.enable( gl.DEPTH_TEST );

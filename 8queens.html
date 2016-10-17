@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+	<head>		
+		<style>
+			p {
+			    font-family: "Courier New", Courier, monospace;
+			}
+			
+		</style>
+		<script type="text/javascript">
+			
+			var COLS = [ -1, -1, -1, -1, -1, -1, -1, -1 ];
+			var ROW  = -1;
+			var SOL  = 0;
+			
+			function printBoard( id ) {
+
+				var str = '*--- -----------------*<br>';
+
+				for ( var row = 0; row < 8; ++row ) {
+
+					str += "| " + ( 8 - row ) + " | ";
+
+					for ( var col = 0; col < 8; ++col ) 
+
+						str += COLS[ row ] == col ? row + 1 + " " 	: ( ( row + col ) % 2 ) ? "o " : "O ";
+								
+					str += "|<br />";
+				}
+				str += '*--- -A-B-C-D-E-F-G-H-*';
+
+				document.getElementById( id ).innerHTML = str;
+			}
+
+			function check( col ) {
+			
+				for ( var r = 0; r < ROW; ++r ) {
+
+					if (	( COLS[ r ] == col ) ) return false;					
+				
+					if (	( COLS[ ROW - 1 - r ] == col - 1 - r ) ) return false;					
+				
+					if (	( COLS[ ROW - 1 - r ] == col + 1 + r ) ) return false;					
+				}
+				
+				return true;
+			}
+
+			function nextSolutionForCurrentRow( ) {
+
+				if ( 7 < ROW ) return true;
+
+				var col = COLS[ ROW ];
+				
+				while ( ++col < 8 ) {
+
+					if ( check( col ) ) {
+						
+						COLS[ ROW ] = col;
+						
+						if ( ROW == 7 ) 
+						
+							return true;
+						
+						COLS[ ++ROW ] = -1;
+						
+						if( nextSolutionForCurrentRow( ) ) 
+						
+							return true;
+							
+						--ROW;
+					}						
+				}
+				return false;
+			}			
+			
+			function work( ) {
+			
+				if ( ROW < 0 ) {
+					
+					ROW = 0;
+					
+					nextSolutionForCurrentRow( );
+					
+					printBoard( "checkerBoard" );
+					
+					document.getElementById( "solution" ).innerHTML = ++SOL + ".";
+					
+					return
+				}
+				else {
+					
+					for( ROW = 7; 0 <= ROW; --ROW ) { 
+					
+						if( nextSolutionForCurrentRow( ) ) {
+						
+							printBoard( "checkerBoard" );
+							
+							document.getElementById( "solution" ).innerHTML = ++SOL + ".";
+							return;
+						}
+					}
+				}
+				
+				COLS = [ -1, -1, -1, -1, -1, -1, -1, -1 ];
+				ROW  = -1;
+				SOL  = 0;
+			}		
+		</script>	
+
+	</head>
+	
+	<body>
+	
+		<span id="solution">			
+		</span>
+
+		<button id="btn" onclick="work( );">
+			solution
+		</button>
+
+		<p id="checkerBoard">			
+		</p>
+		
+		<table>
+
+	</body>
+
+</html>
