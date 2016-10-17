@@ -47,7 +47,7 @@
 				return true;
 			}
 
-			function solution( ) {
+			function nextSolutionForCurrentRow( ) {
 
 				if ( 7 < ROW ) return true;
 
@@ -65,7 +65,7 @@
 						
 						COLS[ ++ROW ] = -1;
 						
-						if( solution( ) ) 
+						if( nextSolutionForCurrentRow( ) ) 
 						
 							return true;
 							
@@ -81,7 +81,7 @@
 					
 					ROW = 0;
 					
-					solution( );
+					nextSolutionForCurrentRow( );
 					
 					printBoard( "checkerBoard" );
 					
@@ -93,7 +93,7 @@
 					
 					for( ROW = 7; 0 <= ROW; --ROW ) { 
 					
-						if( solution( ) ) {
+						if( nextSolutionForCurrentRow( ) ) {
 						
 							printBoard( "checkerBoard" );
 							
