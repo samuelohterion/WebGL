@@ -36,7 +36,7 @@
 						str += COLS[ row ] == col 
 							? row + 1 + " "
 							: ( ( row + col ) % 2 ) 
-								? "&oplus; "
+								? "&oplus;&nbsp;"
 								: "&nbsp;&nbsp;";
 								
 					str += "|<br />";
