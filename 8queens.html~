@@ -12,13 +12,7 @@
 
 			h2 {
 
-			    font-family: "Lucida", Monaco, monospace;
-
-			}			
-
-			p {
-
-			    font-family: "Lucida", Monaco, monospace;
+			    font-family: "Lucida Console", Monaco, monospace;
 
 			}			
 
@@ -111,7 +105,7 @@
 						
 							printBoard( "checkerBoard" );
 							
-							document.getElementById( "solution" ).innerHTML = "<h2>" + ++SOL + ".</h2>";
+							document.getElementById( "solution" ).innerHTML = ++SOL + ".";
 							
 							return;
 						}
@@ -137,14 +131,13 @@
 		<h2 id="checkerBoard">			
 		</h2>
 
-		<h2 id="solution">
-		test
-		</h2>
+		<span id="solution">			
+		</span>
 
 		<button id="btn" onclick="solve( );">
 			solution
 		</button>
-				
+		
 	</body>
 
 </html>
