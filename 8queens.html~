@@ -2,16 +2,28 @@
 <html>
 
 	<head>		
+
 		<style>
+
 			h1 {
+
 			    font-family: "Courier New", Courier, monospace;
-			}
-			
+			}			
+
 			h2 {
+
 			    font-family: "Lucida", Monaco, monospace;
-			}
-			
+
+			}			
+
+			p {
+
+			    font-family: "Lucida", Monaco, monospace;
+
+			}			
+
 		</style>
+
 		<script type="text/javascript">
 			
 			var COLS = [ -1, -1, -1, -1, -1, -1, -1, -1 ];
@@ -59,7 +71,7 @@
 
 				var col = COLS[ ROW ];
 				
-				while ( ++col < 8 ) {
+				while ( ++col < 8 )
 
 					if ( check( col ) ) {
 						
@@ -73,7 +85,7 @@
 							
 						--ROW;
 					}						
-				}
+
 				return false;
 			}			
 			
@@ -99,7 +111,7 @@
 						
 							printBoard( "checkerBoard" );
 							
-							document.getElementById( "solution" ).innerHTML = ++SOL + ".";
+							document.getElementById( "solution" ).innerHTML = "<h2>" + ++SOL + ".</h2>";
 							
 							return;
 						}
@@ -109,7 +121,9 @@
 				COLS = [ -1, -1, -1, -1, -1, -1, -1, -1 ];
 				ROW  = -1;
 				SOL  = 0;
+				
 			}		
+
 		</script>	
 
 	</head>
@@ -117,19 +131,20 @@
 	<body>
 	
 		<h1>
-		Eight Queens Puzzle
+			Eight Queens Puzzle
 		</h1>
 
 		<h2 id="checkerBoard">			
 		</h2>
 
-		<span id="solution">			
-		</span>
+		<h2 id="solution">
+		test
+		</h2>
 
 		<button id="btn" onclick="solve( );">
 			solution
 		</button>
-		
+				
 	</body>
 
 </html>
