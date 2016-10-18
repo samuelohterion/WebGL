@@ -3,8 +3,12 @@
 
 	<head>		
 		<style>
-			p {
+			h1 {
 			    font-family: "Courier New", Courier, monospace;
+			}
+			
+			h2 {
+			    font-family: "Lucida", Monaco, monospace;
 			}
 			
 		</style>
@@ -24,7 +28,11 @@
 
 					for ( var col = 0; col < 8; ++col ) 
 
-						str += COLS[ row ] == col ? row + 1 + " " 	: ( ( row + col ) % 2 ) ? "o " : "O ";
+						str += COLS[ row ] == col 
+							? row + 1 + " "
+							: ( ( row + col ) % 2 ) 
+								? "&oplus; "
+								: "&nbsp;&nbsp;";
 								
 					str += "|<br />";
 				}
@@ -37,17 +45,15 @@
 			
 				for ( var r = 0; r < ROW; ++r ) {
 
-					if (	( COLS[ r ] == col ) ) return false;					
-				
-					if (	( COLS[ ROW - 1 - r ] == col - 1 - r ) ) return false;					
-				
-					if (	( COLS[ ROW - 1 - r ] == col + 1 + r ) ) return false;					
+					if (	( COLS[ r ] == col ) ||
+							( COLS[ ROW - 1 - r ] == col - 1 - r ) ||
+							( COLS[ ROW - 1 - r ] == col + 1 + r ) ) return false;					
 				}
 				
 				return true;
 			}
 
-			function nextSolutionForCurrentRow( ) {
+			function nxtSol( ) {
 
 				if ( 7 < ROW ) return true;
 
@@ -59,15 +65,11 @@
 						
 						COLS[ ROW ] = col;
 						
-						if ( ROW == 7 ) 
-						
-							return true;
+						if ( ROW == 7 ) return true;
 						
 						COLS[ ++ROW ] = -1;
 						
-						if( nextSolutionForCurrentRow( ) ) 
-						
-							return true;
+						if( nxtSol( ) ) return true;
 							
 						--ROW;
 					}						
@@ -75,29 +77,30 @@
 				return false;
 			}			
 			
-			function work( ) {
+			function solve( ) {
 			
 				if ( ROW < 0 ) {
 					
 					ROW = 0;
 					
-					nextSolutionForCurrentRow( );
+					nxtSol( );
 					
 					printBoard( "checkerBoard" );
 					
 					document.getElementById( "solution" ).innerHTML = ++SOL + ".";
 					
-					return
+					return;
 				}
 				else {
 					
 					for( ROW = 7; 0 <= ROW; --ROW ) { 
 					
-						if( nextSolutionForCurrentRow( ) ) {
+						if( nxtSol( ) ) {
 						
 							printBoard( "checkerBoard" );
 							
 							document.getElementById( "solution" ).innerHTML = ++SOL + ".";
+							
 							return;
 						}
 					}
@@ -113,18 +116,20 @@
 	
 	<body>
 	
+		<h1>
+		Eight Queens Puzzle
+		</h1>
+
+		<h2 id="checkerBoard">			
+		</h2>
+
 		<span id="solution">			
 		</span>
 
-		<button id="btn" onclick="work( );">
+		<button id="btn" onclick="solve( );">
 			solution
 		</button>
-
-		<p id="checkerBoard">			
-		</p>
 		
-		<table>
-
 	</body>
 
 </html>

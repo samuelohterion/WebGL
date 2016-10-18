@@ -2,12 +2,22 @@
 <html>
 
 	<head>		
+
 		<style>
-			p {
+
+			h1 {
+
 			    font-family: "Courier New", Courier, monospace;
-			}
-			
+			}			
+
+			h2 {
+
+			    font-family: "Lucida", Monaco, monospace;
+
+			}			
+
 		</style>
+
 		<script type="text/javascript">
 			
 			var COLS = [ -1, -1, -1, -1, -1, -1, -1, -1 ];
@@ -24,7 +34,11 @@
 
 					for ( var col = 0; col < 8; ++col ) 
 
-						str += COLS[ row ] == col ? row + 1 + " " 	: ( ( row + col ) % 2 ) ? "o " : "O ";
+						str += COLS[ row ] == col 
+							? row + 1 + " "
+							: ( ( row + col ) % 2 ) 
+								? "&oplus; "
+								: "&nbsp;&nbsp;";
 								
 					str += "|<br />";
 				}
@@ -37,67 +51,62 @@
 			
 				for ( var r = 0; r < ROW; ++r ) {
 
-					if (	( COLS[ r ] == col ) ) return false;					
-				
-					if (	( COLS[ ROW - 1 - r ] == col - 1 - r ) ) return false;					
-				
-					if (	( COLS[ ROW - 1 - r ] == col + 1 + r ) ) return false;					
+					if (	( COLS[ r ] == col ) ||
+							( COLS[ ROW - 1 - r ] == col - 1 - r ) ||
+							( COLS[ ROW - 1 - r ] == col + 1 + r ) ) return false;					
 				}
 				
 				return true;
 			}
 
-			function solution( ) {
+			function nxtSol( ) {
 
 				if ( 7 < ROW ) return true;
 
 				var col = COLS[ ROW ];
 				
-				while ( ++col < 8 ) {
+				while ( ++col < 8 )
 
 					if ( check( col ) ) {
 						
 						COLS[ ROW ] = col;
 						
-						if ( ROW == 7 ) 
-						
-							return true;
+						if ( ROW == 7 ) return true;
 						
 						COLS[ ++ROW ] = -1;
 						
-						if( solution( ) ) 
-						
-							return true;
+						if( nxtSol( ) ) return true;
 							
 						--ROW;
 					}						
-				}
+
 				return false;
 			}			
 			
-			function work( ) {
+			function solve( ) {
 			
 				if ( ROW < 0 ) {
 					
 					ROW = 0;
 					
-					solution( );
+					nxtSol( );
 					
 					printBoard( "checkerBoard" );
 					
 					document.getElementById( "solution" ).innerHTML = ++SOL + ".";
 					
-					return
+					return;
 				}
 				else {
 					
 					for( ROW = 7; 0 <= ROW; --ROW ) { 
 					
-						if( solution( ) ) {
+						if( nxtSol( ) ) {
 						
 							printBoard( "checkerBoard" );
 							
 							document.getElementById( "solution" ).innerHTML = ++SOL + ".";
+							
 							return;
 						}
 					}
@@ -106,25 +115,29 @@
 				COLS = [ -1, -1, -1, -1, -1, -1, -1, -1 ];
 				ROW  = -1;
 				SOL  = 0;
+				
 			}		
+
 		</script>	
 
 	</head>
 	
 	<body>
 	
+		<h1>
+			Eight Queens Puzzle
+		</h1>
+
+		<h2 id="checkerBoard">			
+		</h2>
+
 		<span id="solution">			
 		</span>
 
-		<button id="btn" onclick="work( );">
+		<button id="btn" onclick="solve( );">
 			solution
 		</button>
-
-		<p id="checkerBoard">			
-		</p>
 		
-		<table>
-
 	</body>
 
 </html>
