@@ -1,129 +1,110 @@
 <!doctype html>
 
 <html>
-	<head>
+  <head>
+    <script>
+    </script>
+  </head>
+  <body>
+    <canvas width = "800" height = "800" id = "myCanvas">
+    </canvas>
+    <script type="text/javascript">
+      /*============ Creating a canvas =================*/
 
-	</head>
+      var cv = document.getElementById( 'myCanvas' );
+      var gl = cv.getContext( 'experimental-webgl' );
 
-	<body>
-		<canvas width = "800" height = "800" id = "myCanvas">
-		</canvas>
+      function createVectorArrayF32( datas ) {
+	  var buffer = gl.createBuffer( );
+	  gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
+	  gl.bufferData( gl.ARRAY_BUFFER, new Float32Array( datas ), gl.STATIC_DRAW );
+	  gl.bindBuffer( gl.ARRAY_BUFFER, null );
+	  return buffer;
+      }
 
-		<script>
+      function createIndexArrayUI16( datas ) {
+	  var buffer = gl.createBuffer( );
+	  gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, buffer );
+	  gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, new Uint16Array( datas ), gl.STATIC_DRAW );
+	  gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, null );
+	  return buffer;
+      }
 
-			/*============ Creating a canvas =================*/
+      function createShader( shaderScript, shaderType ) {
+	  var shader = gl.createShader( shaderType );
+	  gl.shaderSource( shader, shaderScript );
+	  gl.compileShader( shader );
+	  return shader;
+      }
 
-			var cv = document.getElementById( 'myCanvas' );
-			var gl = cv.getContext( 'experimental-webgl' );
+      function createShaderProgram( vShader, fShader ) {
+	  var shaderProgram = gl.createProgram( );
+	  gl.attachShader( shaderProgram, vShader );
+	  gl.attachShader( shaderProgram, fShader );
+	  gl.linkProgram( shaderProgram );
+	  gl.useProgram( shaderProgram );
+	  return shaderProgram;
+      }
 
-			function createVectorArrayF32( datas ) {
-				
-				var buffer = gl.createBuffer( );
-				gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
-				gl.bufferData( gl.ARRAY_BUFFER, new Float32Array( datas ), gl.STATIC_DRAW );
-				gl.bindBuffer( gl.ARRAY_BUFFER, null );
-				return buffer;
-			}
+      /*========== Datas =========*/
 
-			function createIndexArrayUI16( datas ) {
-				
-				var buffer = gl.createBuffer( );
-				gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, buffer );
-				gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, new Uint16Array( datas ), gl.STATIC_DRAW );
-				gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, null );				  
-				return buffer;
-			}
-			
-			function createShader( shaderScript, shaderType ) {
-			
-				var shader = gl.createShader( shaderType );
-				gl.shaderSource( shader, shaderScript );
-				gl.compileShader( shader );
-				return shader;
-			}
-			
-			function createShaderProgram( vShader, fShader ) {
-				
-				var shaderProgram = gl.createProgram( );
-				gl.attachShader( shaderProgram, vShader );
-				gl.attachShader( shaderProgram, fShader );
-				gl.linkProgram( shaderProgram );
-				gl.useProgram( shaderProgram );
-				return shaderProgram;
-			}
+      var vertices = [
 
+	      -1.0, -1.0, +0.0,
+	      +1.0, -1.0, +0.0,
+	      +1.0, +1.0, +0.0,
+	      -1.0, +1.0, +0.0
+      ];
 
-			/*========== Datas =========*/
+      var colors = [
 
-			var vertices = [
+	  0.0, 0.0, 1.0,
+	  1.0, 0.0, 0.0,
+	  0.0, 1.0, 0.0,
+	  0.3, 0.3, 0.3
+      ];
 
-				-1.0, -1.0, +0.0,
-				+1.0, -1.0, +0.0,
-				+1.0, +1.0, +0.0,
-				-1.0, +1.0, +0.0 
-			];
+      indices = [
+	  0, 1, 2,
+	  2, 3, 0
+      ];
 
-			var colors = [
+      /*========== Defining and storing the geometry =========*/
 
-				0.0, 1.0, 1.0,
-				1.0, 0.0, 1.0,
-				1.0, 1.0, 0.0,
-				0.3, 0.3, 0.3
-			];
+      var vertexBuffer = createVectorArrayF32( vertices );
 
-			indices = [
+      var indexBuffer = createIndexArrayUI16( indices );
 
-				0, 1, 2,
-				2, 3, 0
-			];
+      var colorBuffer =  createVectorArrayF32( colors );
 
-			
-			/*========== Defining and storing the geometry =========*/
+      /*====================== Shaders =======================*/
 
+      var vertShader = createShader( '\
+      attribute vec3 coordinates;\
+      attribute vec3 color;\
+      varying   vec3 vColor;\
+      varying   vec3 vPosition;\
+      void main( void ) {\
+      \
+	gl_Position = vec4( coordinates, 1. );\
+	vColor = color;\
+	vPosition = coordinates; \
+      }',
+				     gl.VERTEX_SHADER );
 
-			var vertexBuffer = createVectorArrayF32( vertices );
-
-			var indexBuffer = createIndexArrayUI16( indices );
-
-			var colorBuffer =  createVectorArrayF32( colors );
-						
-
-			/*====================== Shaders =======================*/
-			
-
-			var vertShader = createShader( '\
-				attribute vec3 coordinates;\
-				attribute vec3 color;\
-				varying   vec3 vColor;\
-				varying   vec3 vPosition;\
-				void main( void ) {\
-				\
-					gl_Position = vec4( coordinates, 1. );\
-					vColor = color;\
-					vPosition = coordinates; \
-				}',
-				gl.VERTEX_SHADER );
-
-			
-			var fragShader = createShader( ' \
-				precision mediump float; \
-				varying vec3 vColor; \
-				varying vec3 vPosition; \
-				void main( void ) { \
-<<<<<<< HEAD
-				\
-					if ( dot( vPosition, vPosition ) < 1. ) \
-=======
-					if( dot( vPosition, vPosition ) < 1. ) { \
-						gl_FragColor = vec4( sqrt( 1. - dot( vPosition, vPosition ) ) * vColor, 1. ); \
-					} \
-					else { \
->>>>>>> 24cbb3c6bfc7e6d47f667599b9ddea52c2c180f4
-						gl_FragColor = vec4( vColor, 1. ); \
-					else \
-						gl_FragColor = vec4( vPosition, 1. ); \
-				}',
-				gl.FRAGMENT_SHADER );
+      var fragShader = createShader( ' \
+      precision mediump float; \
+      varying vec3 vColor; \
+      varying vec3 vPosition; \
+      void main( void ) { \
+	if( dot( vPosition, vPosition ) < 1. ) { \
+		gl_FragColor = vec4( sqrt( 1. - dot( vPosition, vPosition ) ) * vColor, 1. ); \
+	} \
+	else { \
+		gl_FragColor = vec4( vPosition, 1. ); \
+	}\
+      }',
+				     gl.FRAGMENT_SHADER );
 
 			// Create a shader program object to
 			// store the combined shader program

@@ -1,46 +1,50 @@
 /*============ Creating a canvas =================*/
 
-function createGLForCanvas( canvasID ) {
 
-	var cv = document.getElementById( 'canvasID' );
-	return cv.getContext( 'experimental-webgl' );
+function cnvs( canvasID ) {
 
+    return document.getElemntById( canvasID );
+}
+
+function gtglcntnt( cnvs, mode ) {
+
+    return cnvs.getContext( mode ); //'experimental-webgl'
 }
 
 function createVectorArrayF32( datas ) {
-	
-	var buffer = gl.createBuffer( );
-	gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
-	gl.bufferData( gl.ARRAY_BUFFER, new Float32Array( datas ), gl.STATIC_DRAW );
-	gl.bindBuffer( gl.ARRAY_BUFFER, null );
-	return buffer;
+
+    var buffer = gl.createBuffer( );
+    gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
+    gl.bufferData( gl.ARRAY_BUFFER, new Float32Array( datas ), gl.STATIC_DRAW );
+    gl.bindBuffer( gl.ARRAY_BUFFER, null );
+    return buffer;
 }
 
 function createIndexArrayUI16( datas ) {
-	
-	var buffer = gl.createBuffer( );
-	gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, buffer );
-	gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, new Uint16Array( datas ), gl.STATIC_DRAW );
-	gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, null );
-	return buffer;
+
+    var buffer = gl.createBuffer( );
+    gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, buffer );
+    gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, new Uint16Array( datas ), gl.STATIC_DRAW );
+    gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, null );
+    return buffer;
 }
 
 function createShader( shaderScript, shaderType ) {
 
-	var shader = gl.createShader( shaderType );
-	gl.shaderSource( shader, shaderScript );
-	gl.compileShader( shader );
-	return shader;
+    var shader = gl.createShader( shaderType );
+    gl.shaderSource( shader, shaderScript );
+    gl.compileShader( shader );
+    return shader;
 }
 
 function createShaderProgram( vShader, fShader ) {
-	
-	var shaderProgram = gl.createProgram( );
-	gl.attachShader( shaderProgram, vShader );
-	gl.attachShader( shaderProgram, fShader );
-	gl.linkProgram( shaderProgram );
-	gl.useProgram( shaderProgram );
-	return shaderProgram;
+
+    var shaderProgram = gl.createProgram( );
+    gl.attachShader( shaderProgram, vShader );
+    gl.attachShader( shaderProgram, fShader );
+    gl.linkProgram( shaderProgram );
+    gl.useProgram( shaderProgram );
+    return shaderProgram;
 }
 
 
@@ -88,7 +92,6 @@ var vertShader = createShader( " \
 	varying   vec3 vColor; \
 	void main( void ) { \
 	    gl_Position = vec4( coordinates, 1. ); \
-
 	    vColor = color; \
 	}",
 	 gl.VERTEX_SHADER );
