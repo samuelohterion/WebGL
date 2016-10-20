@@ -67,10 +67,10 @@
 
 			var colors = [
 
-				1.0, 1.0, 1.0,
-				1.0, 1.0, 1.0,
-				1.0, 1.0, 1.0,
-				1.0, 1.0, 1.0
+				0.0, 1.0, 1.0,
+				1.0, 0.0, 1.0,
+				1.0, 1.0, 0.0,
+				0.3, 0.3, 0.3
 			];
 
 			indices = [
@@ -112,12 +112,11 @@
 				varying vec3 vColor; \
 				varying vec3 vPosition; \
 				void main( void ) { \
-					if( length( vPosition, vPosition ) < 1. ) { \
-						gl_FragColor = vec4( sqrt( 1. - dot( vPosition, vPosition ) ), 1. ); \
-					} \
-					else { \
+				\
+					if ( dot( vPosition, vPosition ) < 1. ) \
 						gl_FragColor = vec4( vColor, 1. ); \
-					} \
+					else \
+						gl_FragColor = vec4( vPosition, 1. ); \
 				}',
 				gl.FRAGMENT_SHADER );
 
