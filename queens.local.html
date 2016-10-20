@@ -17,12 +17,12 @@
 			function check( r, c ) {
 				for ( var i = 0; i < 8; ++i )
 					if(	( board[ i ][ c ] ) || 
-							( board[ r ][ i ] ) ||
-							( r + i < 8  && c + i < 8 && board[ r + i ][ c + i ] ) ||
-							( 0 <= r - i && c + i < 8 && board[ r - i ][ c + i ] ) ||
-							( 0 <= r - i && 0 <= c - i && board[ r - i ][ c - i ] ) ||
-							( r + i < 8  && 0 <= c - i && board[ r + i ][ c - i ] ) )
-							return false;						
+						( board[ r ][ i ] ) ||
+						( r + i < 8  && c + i < 8 && board[ r + i ][ c + i ] ) ||
+						( 0 <= r - i && c + i < 8 && board[ r - i ][ c + i ] ) ||
+						( 0 <= r - i && 0 <= c - i && board[ r - i ][ c - i ] ) ||
+						( r + i < 8  && 0 <= c - i && board[ r + i ][ c - i ] ) )
+						return false;						
 				return true;
 			}
 			function drop( queen, r, cc ) {

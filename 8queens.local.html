@@ -5,12 +5,12 @@
 
 		<style>
 
-			h1 {
+			h2 {
 
 			    font-family: "Lucida Console", Monaco, monospace;
 			}			
 
-			h2 {
+			h1 {
 
 			    font-family: "Courier New", Courier, monospace;
 			}			
@@ -25,23 +25,23 @@
 			
 			function printBoard( id ) {
 
-				var str = '*--- -----------------*<br>';
+				var str = '*---&nbsp;-----------------*<br>';
 
 				for ( var row = 0; row < 8; ++row ) {
 
-					str += "| " + ( 8 - row ) + " | ";
+					str += "|&nbsp;" + ( 8 - row ) + "&nbsp;|&nbsp;";
 
 					for ( var col = 0; col < 8; ++col ) 
 
 						str += COLS[ row ] == col 
 							? row + 1 + "&nbsp;"
 							: ( ( row + col ) % 2 ) 
-								? "&oplus;&nbsp;"
+								? "&middot;&nbsp;"
 								: "&nbsp;&nbsp;";
 								
 					str += "|<br />";
 				}
-				str += '*--- -A-B-C-D-E-F-G-H-*';
+				str += '*---&nbsp;-A-B-C-D-E-F-G-H-*';
 
 				document.getElementById( id ).innerHTML = str;
 			}

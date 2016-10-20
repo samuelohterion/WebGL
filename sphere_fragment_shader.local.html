@@ -112,8 +112,15 @@
 				varying vec3 vColor; \
 				varying vec3 vPosition; \
 				void main( void ) { \
+<<<<<<< HEAD
 				\
 					if ( dot( vPosition, vPosition ) < 1. ) \
+=======
+					if( dot( vPosition, vPosition ) < 1. ) { \
+						gl_FragColor = vec4( sqrt( 1. - dot( vPosition, vPosition ) ) * vColor, 1. ); \
+					} \
+					else { \
+>>>>>>> 24cbb3c6bfc7e6d47f667599b9ddea52c2c180f4
 						gl_FragColor = vec4( vColor, 1. ); \
 					else \
 						gl_FragColor = vec4( vPosition, 1. ); \
