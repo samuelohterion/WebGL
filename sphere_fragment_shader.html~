@@ -73,10 +73,10 @@
 			main( void ) {
 			   	
 		 		vec3
-	 			lgt = vec3( -1., -1., +0. ),
+	 			lgt = vec3( 4. * sin( 1.2 * sin( .83 * uTime ) ), 4. - 4. * cos( 1.2 * sin( .83 * uTime ) ), 1. ),
 		 		eye = vec3( 0., 0., 3. ),
 				ray = normalize( vPosition - eye ),
-				pos = vec3( .0, 1. - 2. * sin( uTime ) * sin( uTime ), -2. ),
+				pos = vec3( .1 * cos( 2.123 * uTime ), 0. - .1 * sin( 2.123 * uTime ), -2. ),
 				hit,
 				nrm;
 				
@@ -90,13 +90,14 @@
 				if( ht ) {
 				
 					vec3
-					lh = normalize( lgt - hit );
+					lhd = lgt - hit,
+					lh = lhd * pow( dot( lhd, lhd ), -.25 );
 					
-					gl_FragColor = vec4( .1 + dot( lh, nrm ) * vec3( .7, .8, .9 ), 1. );
+					gl_FragColor = vec4( 2. * ( vPosition + vColor ) * dot( lh, nrm ), 1. );
 				}
 				else {
 				
-					gl_FragColor = vec4( vColor, 1. );
+					gl_FragColor = vec4( 1. + vPosition + vColor, 1. );
 				}
 			} 
 		</script>
@@ -105,7 +106,7 @@
    	
 			/*============ Creating a canvas =================*/
 			var cv = document.getElementById('myCanvas');
-			var gl = cv.getContext('experimental-webgl');
+			var gl = cv.getContext('webgl');
 			
 			function createVectorArrayF32(datas) {
 				var buffer = gl.createBuffer();
