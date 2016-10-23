@@ -11,7 +11,7 @@ function gtglcntnt( cnvs, mode ) {
     return cnvs.getContext( mode ); //'experimental-webgl'
 }
 
-function createVectorArrayF32( datas ) {
+function createVectorArrayF32( gl, datas ) {
 
     var buffer = gl.createBuffer( );
     gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
@@ -20,7 +20,7 @@ function createVectorArrayF32( datas ) {
     return buffer;
 }
 
-function createIndexArrayUI16( datas ) {
+function createIndexArrayUI16( gl, datas ) {
 
     var buffer = gl.createBuffer( );
     gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, buffer );
@@ -29,7 +29,7 @@ function createIndexArrayUI16( datas ) {
     return buffer;
 }
 
-function createShader( shaderScript, shaderType ) {
+function createShader( gl, shaderScript, shaderType ) {
 
     var shader = gl.createShader( shaderType );
     gl.shaderSource( shader, shaderScript );
@@ -37,7 +37,7 @@ function createShader( shaderScript, shaderType ) {
     return shader;
 }
 
-function createShaderProgram( vShader, fShader ) {
+function createShaderProgram( gl, vShader, fShader ) {
 
     var shaderProgram = gl.createProgram( );
     gl.attachShader( shaderProgram, vShader );
@@ -48,66 +48,9 @@ function createShaderProgram( vShader, fShader ) {
 }
 
 
-/*========== Datas =========*/
-
-var vertices = [
-
-	-.95, -.95, +.0,
-	+.95, -.95, +.0,
-	+.95, +.95, +.0,
-	-.95, +.95, +.0 
-];
-
-var colors = [
-
-	1.0, 0.0, 0.0,
-	0.0, 1.0, 0.0,
-	0.0, 0.0, 1.0,
-	0.3, 0.3, 0.3
-];
-
-indices = [
-
-	0, 1, 2,
-	2, 3, 0
-];
-
-
-
-/*========== Defining and storing the geometry =========*/
-
-
-var vertexBuffer = createVectorArrayF32( vertices );
-
-var indexBuffer = createIndexArrayUI16( indices );
-
-var colorBuffer =  createVectorArrayF32( colors );
-			
-
-/*====================== Shaders =======================*/
-
-var vertShader = createShader( " \
-	attribute vec3 coordinates; \
-	attribute vec3 color; \
-	varying   vec3 vColor; \
-	void main( void ) { \
-	    gl_Position = vec4( coordinates, 1. ); \
-	    vColor = color; \
-	}",
-	 gl.VERTEX_SHADER );
-
-
-var fragShader = createShader( 
-	"precision mediump float;" +
-	"varying vec3 vColor;" +
-	"void main( void ) {" +
-	"	gl_FragColor = vec4( vColor, 1. );" +
-	"}",
-	 gl.FRAGMENT_SHADER );
-
 // Create a shader program object to
 // store the combined shader program
-var shaderProgram = createShaderProgram( vertShader, fragShader );
+var shaderProgram = createShaderProgram( gl, vertShader, fragShader );
 
 
 /* ======= Associating shaders to buffer objects =======*/
