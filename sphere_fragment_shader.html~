@@ -103,7 +103,7 @@
 					
 						vec3
 						lhd = lgt - hit,
-						lh = lhd * pow( dot( lhd, lhd ), -1.0 );
+						lh = lhd * pow( dot( lhd, lhd ), -.125 );
 						gl_FragColor = vec4( vec3( .1, .1, 1. ) * ( .3 * ( pos + vColor + abs( vPosition ) ) + max( dot( lh, nrm ), 0. ) ), 1. );
 					}
 					else {
